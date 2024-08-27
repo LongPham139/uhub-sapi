@@ -42,6 +42,7 @@
 						<properties>
 							<env>dev</env>
 							<http.port>8081</http.port>
+							<enc.key>123456789</enc.key>
 						</properties>
 					</cloudHubDeployment>
 				</configuration>
