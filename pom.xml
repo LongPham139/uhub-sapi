@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.mycompany</groupId>
@@ -16,62 +18,31 @@
 		<app.runtime>4.7.2</app.runtime>
 		<mule.maven.plugin.version>4.2.0</mule.maven.plugin.version>
 	</properties>
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.mule.tools.maven</groupId>
-						<artifactId>mule-maven-plugin</artifactId>
-						<version>${mule.maven.plugin.version}</version>
-						<extensions>true</extensions>
-						
-						<configuration>
-							<cloudHubDeployment>
-								<uri>https://anypoint.mulesoft.com</uri>
-								<muleVersion>${app.runtime}</muleVersion>
-								<businessGroup>UHIS</businessGroup>
-								<username>LongPT37</username>
-								<password>Ptl13092000</password>
-								<applicationName>music-sapi</applicationName>
-								<environment>dev</environment>
-								<region>us-east-1</region>
-								<workers>1</workers>
-								<workerType>MICRO</workerType>
-								<properties>
-									<env>dev</env>
-									<enc.key>${enc.key}</enc.key>
-									<http.port>8081</http.port>
-									<anypoint.platform.client_id>${anypoint.platform.client_id}</anypoint.platform.client_id>
-									<anypoint.platform.client_secret>${anypoint.platform.client_secret}</anypoint.platform.client_secret>
-								</properties>
-							</cloudHubDeployment>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>	
+
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>3.2.0</version>
-			</plugin>
-			<plugin>
 				<groupId>org.mule.tools.maven</groupId>
 				<artifactId>mule-maven-plugin</artifactId>
-				<version>${mule.maven.plugin.version}</version>
+				<version>3.7.1</version>
 				<extensions>true</extensions>
 				<configuration>
-					<sharedLibraries>
-						<sharedLibrary>
-							<groupId>com.mycompany</groupId>
-							<artifactId>ojdbc8</artifactId>
-						</sharedLibrary>
-					</sharedLibraries>					
+					<cloudHubDeployment>
+						<deploymentTimeout>100000000</deploymentTimeout>
+						<uri>https://anypoint.mulesoft.com</uri>
+						<muleVersion>${app.runtime}</muleVersion>
+						<businessGroup>WFH</businessGroup>
+						<username>phamlong139</username>
+						<password>Ptl13092000</password>
+						<applicationName>uhub-sapi-project</applicationName>
+						<environment>Sandbox</environment>
+						<region>us-east-1</region>
+						<workers>1</workers>
+						<workerType>MICRO</workerType>
+						<properties>
+							<http.port>8081</http.port>
+						</properties>
+					</cloudHubDeployment>
 				</configuration>
 			</plugin>
 		</plugins>
