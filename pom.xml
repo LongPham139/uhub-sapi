@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.mycompany</groupId>
+	<groupId>f8d0d1f8-770f-4eb9-bd38-bb62175774f5</groupId>
 	<artifactId>uhub-sapi-project</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>mule-application</packaging>
 
 	<name>uhub-sapi-project</name>
 
+	<description/>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<app.runtime>4.7.2</app.runtime>
 		<mule.maven.plugin.version>4.2.0</mule.maven.plugin.version>
+		<tags/>
+		<categories>[]</categories>
+		<fields>[]</fields>
 	</properties>
 
 	<build>
@@ -27,8 +29,9 @@
 				<version>4.1.1</version>
 				<extensions>true</extensions>
 				<configuration>
-					<cloudHubDeployment>
-						<deploymentTimeout>100000000</deploymentTimeout>
+					<cloudhub2Deployment>
+						<!-- <deploymentTimeout>100000000</deploymentTimeout> -->
+						<provider>MC</provider>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<muleVersion>${app.runtime}</muleVersion>
 						<businessGroup>WFH</businessGroup>
@@ -36,15 +39,21 @@
 						<password>Ptl13092000</password>
 						<applicationName>uhub-sapi-project</applicationName>
 						<environment>Sandbox</environment>
-						<region>us-east-1</region>
-						<workers>1</workers>
-						<workerType>MICRO</workerType>
+						<target>Cloudhub-US-East-2</target>
+						<replicas>1</replicas>
+						<vCores>1</vCores>
 						<properties>
-							<env>dev</env>
 							<http.port>8081</http.port>
-							<enc.key>1234567890abcdef</enc.key>
 						</properties>
-					</cloudHubDeployment>
+						<deploymentSettings>
+							<http>
+								<inbound>
+									<forwardSslSession>false</forwardSslSession>
+									<lastMileSecurity>false</lastMileSecurity>
+								</inbound>
+							</http>
+						</deploymentSettings>
+					</cloudhub2Deployment>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -76,9 +85,9 @@
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
-		    <groupId>com.oracle.database.jdbc</groupId>
-		    <artifactId>ojdbc8</artifactId>
-		    <version>23.2.0.0</version>
+			<groupId>com.mycompany</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<version>0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.mulesoft.modules</groupId>
