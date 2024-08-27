@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<sub-flow name="get-covid-reports" doc:id="12e658cc-aaa1-4f36-a710-d339c2574402" >
+		<logger level="INFO" doc:name="Logger" doc:id="0b746fe6-f344-4bf7-b7f0-5ba3771aa866" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId], message: Started get covid case reports flow, payload: #[payload]" />
+		<db:select doc:name="Select" doc:id="4b210408-4fda-40b2-b257-4128a5042c52" config-ref="Database_Config">
+			<db:sql><![CDATA[#[vars.dynamicQuery]]]></db:sql>
+		</db:select>
+		<logger level="INFO" doc:name="Logger1" doc:id="4b3e0279-f5e3-4389-a1aa-e3e843bedf3c" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId], message: Ended get covid case  reports flow, payload: #[payload]" />
+	</sub-flow>
+	<sub-flow name="get-covid-case-by-national-id" doc:id="119fc93c-28b7-41c1-8ebf-c1dbd3d4e250" >
+		<logger level="INFO" doc:name="Logger" doc:id="05c4fe99-0951-42e2-b9d8-88fcf53725c4" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId], message: Started get covid case by national ID flow, payload: #[vars.covidCasePayload]"/>
+		<db:select doc:name="Select" doc:id="4474ee0f-7586-49dc-bc9f-7911ffae2943" config-ref="Database_Config">
+			<db:sql><![CDATA[select * from CVD_CASE_MASTER WHERE national_id =:nationalID]]></db:sql>
+			<db:input-parameters><![CDATA[#[payload]]]></db:input-parameters>
+		</db:select>
+		<logger level="INFO" doc:name="Logger" doc:id="a68d395a-bb1f-4a84-9985-4bca0b149d74" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId], message: Ended get covid case by national ID flow, payload: #[vars.covidCasePayload]"/>
+	</sub-flow>
+	<sub-flow name="update-covid-case" doc:id="48ec2ad2-f2d2-449b-9066-3bc3f0f9e67f" >
+		<logger level="INFO" doc:name="Logger" doc:id="11708e06-ac2c-40eb-8449-2255ebde1354" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId], message: Started update covid case flow, payload: #[vars.covidCasePayload]"/>
+		<db:update doc:name="Update" doc:id="7d003e77-f7b2-498c-96cc-7d9cb4065ae7" config-ref="Database_Config" autoGenerateKeys="true">
+			<db:sql ><![CDATA[UPDATE CVD_CASE_MASTER
+SET 
+  SOURCE =:source,
+  CASE_TYPE =:case_type,
+  FIRST_NAME =:first_name,
+  LAST_NAME =:last_name,
+  PHONE =:phone,
+  EMAIL =:email,
+  DATE_OF_BIRTH =:date_of_birth,
+  NATIONAL_ID =:national_id,
+  NATIONAL_ID_TYPE =:national_id_type,
+  STREET_ADDRESS =:street_address,
+  CITY =:city,
+  STATE =:state,
+  POSTAL =:postal,
+  COUNTRY =:country,
+  UPDATE_DATE =:update_date,
+  CREATE_BY =:create_by,
+  UPDATE_BY =:update_by 
+WHERE 
+ CASE_ID =:caseID]]></db:sql>
+			<db:input-parameters ><![CDATA[#[vars.covidCasePayload]]]></db:input-parameters>
+			<db:auto-generated-keys-column-names >
+				<db:auto-generated-keys-column-name value="CASE_ID" />
+			</db:auto-generated-keys-column-names>
+		</db:update>
+		<logger level="INFO" doc:name="End Logger" doc:id="1d1c1d25-055e-40f7-8112-7dbf0900b4db" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId], message: Ended update covid case flow, payload: #[payload]"/>
+	</sub-flow>
+	<sub-flow name="insert-covid-case-sub-flow" doc:id="cd572aec-5f76-4942-9c7a-9b807403396d" >
+		<logger level="INFO" doc:name="Start Insert" doc:id="ad68153e-332c-40aa-85e7-d585eb1346ac" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId], message: Started insert covid case flow, payload: #[vars.covidPayload]"/>
+		<db:insert doc:name="Insert" doc:id="80fd6807-a86b-4c30-8b4a-fbd588b0211d" config-ref="Database_Config" autoGenerateKeys="true">
+			<db:sql ><![CDATA[INSERT INTO CVD_CASE_MASTER (source, case_type, first_name, last_name, phone, email, date_of_birth, national_id, national_id_type, street_address, city, state, postal, country, create_date, update_date, create_by, update_by)
+VALUES(:source, :case_type, :first_name, :last_name, :phone, :email, :date_of_birth, :national_id, :national_id_type, :street_address, :city, :state, :postal, :country, :create_date, :update_date, :create_by, :update_by)]]></db:sql>
+			<db:input-parameters><![CDATA[#[vars.covidPayload]]]></db:input-parameters>
+			<db:auto-generated-keys-column-names >
+				<db:auto-generated-keys-column-name value="CASE_ID" />
+			</db:auto-generated-keys-column-names>
+		</db:insert>
+		<logger level="INFO" doc:name="End Insert " doc:id="3ab97d95-cb0b-4f65-98d7-1070220b60d5" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId], message: Ended insert covid case flow, payload: #[vars.covidPayload]"/>
+	</sub-flow>
+</mule>

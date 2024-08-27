@@ -1,0 +1,322 @@
+#%RAML 1.0 Library
+usage: uhub sapi types
+types:
+  register-covid-case-data-type:
+    type: object
+    properties:
+      source:
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 60
+        example: "The johns hopkins hspital"
+      caseType:
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 20
+        example: "positive"
+      firstName: 
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 30
+        example: "John"
+      lastName: 
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 30
+        example: "Nixon"
+      phone:
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 15
+        example: "541-754-3010"
+      email: 
+        type: string
+        minLength: 1
+        maxLength: 30
+        example: "john@gmail.com"
+      dateOfBirth:
+        type: date-only
+        example: 1989-04-26
+      nationalID:
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 20
+        example: "209-49-6193"
+      nationalIDType:
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 20
+        example: "SSN"
+      address:
+        type: object
+        properties:
+          streetAddress:
+            type: string
+            required: true
+            minLength: 1
+            maxLength: 50
+            example: "1600 Pennsylvania Avenue NW"
+          city:
+            type: string
+            required: true
+            minLength: 1
+            maxLength: 30
+            example: "Bien Hoa"
+          state:
+            type: string
+            required: true
+            minLength: 1
+            maxLength: 30
+            example: "Dong Nai"
+          postal:
+            type: string
+            required: true
+            minLength: 1
+            maxLength: 30
+            example: "20500"
+          country:
+            type: string
+            required: true
+            minLength: 1
+            maxLength: 30
+            example: "VietNam"
+  register-covid-case-response-type:
+    type: object
+    properties:
+      caseID:
+        type: string
+        required: true
+        example: "12314"
+  update-covid-case-data-type:
+    type: object
+    xml:
+      name: covidCase
+    properties:
+      source:
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 60
+        example: "The johns hopkins hspital"
+      caseType:
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 20
+        example: "positive"
+      firstName: 
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 30
+        example: "John"
+      lastName: 
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 30
+        example: "Nixon"
+      phone:
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 15
+        example: "541-754-3010"
+      email: 
+        type: string
+        minLength: 1
+        maxLength: 30
+        example: "john@gmail.com"
+      dateOfBirth:
+        type: date-only
+        example: 1989-04-26
+      nationalID:
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 20
+        example: "209-49-6193"
+      nationalIDType:
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 20
+        example: "SSN"
+      address:
+        type: object
+        properties:
+          streetAddress:
+            type: string
+            required: true
+            minLength: 1
+            maxLength: 50
+            example: "1600 Pennsylvania Avenue NW"
+          city:
+            type: string
+            required: true
+            minLength: 1
+            maxLength: 30
+            example: "Bien Hoa"
+          state:
+            type: string
+            required: true
+            minLength: 1
+            maxLength: 30
+            example: "Dong Nai"
+          postal:
+            type: string
+            required: true
+            minLength: 1
+            maxLength: 30
+            example: "20500"
+          country:
+            type: string
+            required: true
+            minLength: 1
+            maxLength: 30
+            example: "VietNam"
+  update-covid-case-response-type:
+  response:
+      type: object
+      xml:
+        name: response
+      properties:
+        caseID: 
+          type: string
+          required: true
+          example: "3544"      
+  get-cases-by-national-id-response-type:
+    type: array
+    items:
+      type: object
+      description: Contains each case object
+      properties:
+        source:
+          type: string
+          required: true
+          minLength: 1
+          maxLength: 60
+          example: "The johns hopkins hspital"
+        caseID:
+          type: integer
+          required: true
+          example: 456464
+        caseType:
+          type: string
+          required: true
+          minLength: 1
+          maxLength: 20
+          example: "positive"
+        firstName: 
+          type: string
+          required: true
+          minLength: 1
+          maxLength: 30
+          example: "John"
+        lastName: 
+          type: string
+          required: true
+          minLength: 1
+          maxLength: 30
+          example: "Nixon"
+        phone:
+          type: string
+          required: true
+          minLength: 1
+          maxLength: 15
+          example: "541-754-3010"
+        email: 
+          type: string
+          minLength: 1
+          maxLength: 30
+          example: "john@gmail.com"
+        dateOfBirth:
+          type: date-only
+          example: 1989-04-26
+        nationalID:
+          type: string
+          required: true
+          minLength: 1
+          maxLength: 20
+          example: "209-49-6193"
+        nationalIDType:
+          type: string
+          required: true
+          minLength: 1
+          maxLength: 20
+          example: "SSN"
+        address:
+          type: object
+          properties:
+            streetAddress:
+              type: string
+              required: true
+              minLength: 1
+              maxLength: 50
+              example: "1600 Pennsylvania Avenue NW"
+            city:
+              type: string
+              required: true
+              minLength: 1
+              maxLength: 30
+              example: "Bien Hoa"
+            state:
+              type: string
+              required: true
+              minLength: 1
+              maxLength: 30
+              example: "Dong Nai"
+            postal:
+              type: string
+              required: true
+              minLength: 1
+              maxLength: 30
+              example: "20500"
+            country:
+              type: string
+              required: true
+              minLength: 1
+              maxLength: 30
+              example: "VietNam"
+  get-reports-response-type:
+    type: array
+    items:
+      type: object
+      description: Contains each case object
+      properties:
+        state:
+          type: string
+          required: true
+          example: "texas"
+        report:
+          type: object
+          required: true
+          properties: 
+            total: 
+              type: integer
+              required: true
+              example: 46744
+            positive: 
+              type: integer
+              required: true
+              example: 46744
+            recovered:
+              type: integer
+              required: true
+              example: 46744
+            death:
+              type: integer
+              required: true
+              example: 46744
+            vaccinated:
+              type: integer
+              required: true
+              example: 46744
+    

@@ -1,0 +1,7 @@
+{              
+                "code": 500,
+                "message": "Internal server error",
+                "description": "The server encountered an unexpected condition which prevented it from fulfilling the request",
+                "dateTime": "2024-07-08T16:44:42Z",
+                "transactionId": "71890f75-4273-46b3-9950-1e2091fd9d93"
+              }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<flow name="get:\cases\(nationalID):uhub-sapi-config">
+		<logger level="INFO" doc:name="Start Logger" doc:id="bbc96ce1-861c-4120-b35a-e6da6fe34f0e" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId], message: Started get by nationalID covid case flow, payload: #[payload]"/>
+		<set-variable value="#[attributes.uriParams.nationalID]" doc:name="Set Variable" doc:id="788ca52f-c369-4606-8f4b-ae65b79d6cb4" variableName="nationalID"/>
+		<ee:transform doc:name="Transform Message" doc:id="84bee2cf-bee6-4953-ba45-9fefc51a3afe" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	nationalID: vars.nationalID
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="377b95dc-28b8-4bd7-be6e-73fbdb67e259" name="get-covid-case-by-national-id" />
+		<choice doc:name="Choice" doc:id="5f724a49-d082-4005-9232-22dd738c4e14" >
+			<when expression="#[sizeOf(payload) &gt; 0]">
+				<ee:transform doc:name="Transform Message">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="Transform Message" doc:id="0aabbd15-a978-4c86-a3cc-01db2675127b" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	code : 404,
+	message : "Resource not found",
+	description: "The server has not found anything matching the Request-URI",
+	dateTime : now() as String { format: "yyyy-MM-dd'T'HH:mm:ss'Z'" },
+	transactionId : vars.transactionId
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</otherwise>
+		</choice>
+		<logger level="INFO" doc:name="Logger" doc:id="75f7e004-070f-417e-ba4c-5a40503c01f0" message="transactionID: #[vars.transactionId], correlationID: #[vars.correlationId], message: Ended get covid case by national ID flow, payload: #[payload]"/>
+	
+</flow>
+</mule>

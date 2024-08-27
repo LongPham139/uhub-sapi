@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<flow name="get:\cases:uhub-sapi-config">
+		<logger level="INFO" doc:name="Logger" doc:id="eef30b40-2362-48ed-8b96-d9aee5d8dd3f" message="Start get report flow "/>
+		<ee:transform doc:name="Transform Message" doc:id="4524b9ae-b172-44b4-95b9-8406975a2787" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="dynamicQuery" ><![CDATA[if(!isEmpty(attributes.queryParams.state))(
+	"select count(*) as count, case_type, state from cvd_case_master where state= '" ++ upper(attributes.queryParams.state) ++ "' group by case_type, state"
+) else (
+	"select count(*) as count, case_type, state from cvd_case_master group by case_type, state "
+)]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="3fb75913-56f6-4f97-9e30-efcff4577faa" name="get-covid-reports" />
+		<ee:transform doc:name="Transform Message">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map (covidCase, indexOf) -> {
+	state: covidCase.state,
+	caseType: covidCase.CASE_TYPE,
+	numberOfCase: covidCase.count
+	}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="efd7d7f8-aaf3-49f4-8f54-28b75efd7be8" />
+	
+</flow>
+</mule>

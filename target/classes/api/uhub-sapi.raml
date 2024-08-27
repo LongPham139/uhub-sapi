@@ -1,0 +1,146 @@
+#%RAML 1.0
+title: uhub-sapi
+baseUri: http://localhost:8082/covid/v1
+securitySchemes:
+  oauth2.0: !include /exchange_modules/a4677e7e-419a-4e96-a79a-3c750b756bbd/uho-oauth-20-security-scheme/1.0.0/uho-oauth-20-security-scheme.raml
+    
+  # basic: !include /exchange_modules/a4677e7e-419a-4e96-a79a-3c750b756bbd/uho-basic-auth-security-scheme/1.0.0/uho-basic-auth-security-scheme.raml
+
+traits:
+  correlation-id-header: !include exchange_modules/a4677e7e-419a-4e96-a79a-3c750b756bbd/x-correlation-id-header/1.0.0/x-correlation-id-header.raml
+  transaction-id-header: !include /exchange_modules/a4677e7e-419a-4e96-a79a-3c750b756bbd/x-transaction-id-header/1.0.0/x-transaction-id-header.raml
+  covid-reports-query-param: !include /traits/covid-reports-query-param.raml
+
+uses:
+  uhub-sapi-data-types: uhub-sapi-datatypes-library/uhub-sapi-data-types-library.raml
+  uhub-sapi-xml-error-response: /exchange_modules/a4677e7e-419a-4e96-a79a-3c750b756bbd/uho-common-data-types-library/1.0.3/uho-common-data-types-library-xml.raml
+  uhub-sapi-json-error-response: /exchange_modules/a4677e7e-419a-4e96-a79a-3c750b756bbd/uho-common-data-types-library/1.0.3/uho-common-data-types-library-json.raml
+
+/cases:
+  post:
+    description: This resource used to register a covid case
+    securedBy: [oauth2.0]
+    is: [
+       correlation-id-header, transaction-id-header
+    ]
+    body:
+      application/json:
+        type: uhub-sapi-data-types.register-covid-case-data-type
+        example: !include examples/register-covid-case-request-payload.json
+    responses:
+      200:
+        body:
+          application/json:
+            type: uhub-sapi-data-types.register-covid-case-response-type
+            example: !include examples/register-covid-case-response-payload.json
+      400:
+        body:
+          application/json:
+            type: uhub-sapi-json-error-response.error-response-type
+            example: !include examples/400.json
+      500:
+        body:
+          application/json:
+            type: uhub-sapi-json-error-response.error-response-type
+            example: !include examples/500.json
+              
+      503:
+        body:
+          application/json:
+            type: uhub-sapi-xml-error-response.error-response-type
+            example: !include examples/503.json
+  put:
+    description: This resource used to update a covid case
+    securedBy: [oauth2.0]
+    is: [
+       correlation-id-header, transaction-id-header
+    ]
+    body:
+      application/xml:
+        type: uhub-sapi-data-types.update-covid-case-data-type
+        example: !include examples/update-covid-case-request-payload.xml
+    responses:
+      200:
+        body:
+          application/json:
+            type: uhub-sapi-data-types.update-covid-case-response-type
+      400:
+        body:
+          application/json:
+            type: uhub-sapi-json-error-response.error-response-type
+            example: !include examples/400.json
+      500:
+        body:
+          application/json:
+            type: uhub-sapi-json-error-response.error-response-type
+            example: !include examples/500.json
+      503:
+        body:
+          application/json:
+            type: uhub-sapi-json-error-response.error-response-type
+            example: !include examples/503.json
+  get:
+    description: To get reports by state wise and if state not provided all states reports responded
+    securedBy: [oauth2.0]
+    is: [
+       correlation-id-header, transaction-id-header, covid-reports-query-param
+    ]
+    responses:
+      200:
+        body:
+          application/json:
+            type: uhub-sapi-data-types.get-reports-response-type
+            example: !include examples/get-covid-reports-response.json
+      500:
+        body:
+          application/json:
+            type: uhub-sapi-json-error-response.error-response-type
+            example: !include examples/500.json
+      503:
+        body:
+          application/json:
+            type: uhub-sapi-json-error-response.error-response-type
+            example: !include examples/503.json                            
+/cases/{nationalID}:
+  get:
+    description: To get covid case by national id
+    securedBy: [oauth2.0]
+    is: [
+       correlation-id-header, transaction-id-header
+    ]
+    responses:
+      200:
+        body:
+          application/json:
+            type: uhub-sapi-data-types.get-cases-by-national-id-response-type
+            example: !include examples/get-covid-case-by-national-response.json
+      400:
+        body:
+          application/json:
+            type: uhub-sapi-json-error-response.error-response-type
+            example: !include examples/400.json
+      500:
+        body:
+          application/json:
+            type: uhub-sapi-json-error-response.error-response-type
+            example: !include examples/500.json
+      503:
+        body:
+          application/json:
+            type: uhub-sapi-json-error-response.error-response-type
+            example: !include examples/503.json      
+/health-check: 
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: 
+              {
+                "message": "uhub is alive and kicking"
+              }
+
+  
+
+
+          
