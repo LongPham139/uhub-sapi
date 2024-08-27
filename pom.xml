@@ -43,7 +43,9 @@
 						<replicas>1</replicas>
 						<vCores>1</vCores>
 						<properties>
+							<env>dev</env>
 							<http.port>8081</http.port>
+							<enc.key>1234567890abcdef</enc.key>
 						</properties>
 						<deploymentSettings>
 							<http>
