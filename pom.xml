@@ -36,6 +36,21 @@
 							<artifactId>ojdbc8</artifactId>
 						</sharedLibrary>
 					</sharedLibraries>
+					<cloudHubDeployment>
+						<uri>https://anypoint.mulesoft.com</uri>
+						<muleVersion>${app.runtime}</muleVersion>
+						<businessGroup>UHIS</businessGroup>
+						<username>LongPT37</username>
+						<password>Ptl13092000</password>
+						<applicationName>music-sapi</applicationName>
+						<environment>dev</environment>
+						<region>us-east-1</region>
+						<workers>1</workers>
+						<workerType>MICRO</workerType>
+						<properties>
+							<http.port>8081</http.port>
+						</properties>
+					</cloudHubDeployment>
 				</configuration>
 			</plugin>
 		</plugins>
