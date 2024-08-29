@@ -10,6 +10,14 @@
 	<name>uhub-sapi-project</name>
 
 	<description/>
+	<distributionManagement>
+		<repository>
+			<id>uhub-sapi-project</id>
+			<name>uhub-sapi-project</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v3/organizations/f8d0d1f8-770f-4eb9-bd38-bb62175774f5/maven</url>
+			<layout>default</layout>
+		</repository>
+	</distributionManagement>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
