@@ -35,17 +35,19 @@
 						<uri>https://anypoint.mulesoft.com</uri>
 						<muleVersion>${app.runtime}</muleVersion>
 						<businessGroup>WFH</businessGroup>
-						<username>phamlong139</username>
-						<password>Ptl13092000</password>
+						<username>${username}</username>
+						<password>${password}</password>
 						<applicationName>uhub-sapi-project</applicationName>
 						<environment>Sandbox</environment>
 						<target>Cloudhub-US-East-2</target>
 						<replicas>1</replicas>
 						<vCores>0.2</vCores>
 						<properties>
-							<env>dev</env>
+							<env>${env}</env>
 							<http.port>8081</http.port>
-							<enc.key>1234567890abcdef</enc.key>
+							<enc.key>${enc.key}</enc.key>
+							<platform.client_id>${platform.client_id}</platform.client_id>
+							<platform.client_secret>${platform.client_secret}</platform.client_secret>
 						</properties>
 						<deploymentSettings>
 							<http>
