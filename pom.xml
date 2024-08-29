@@ -41,7 +41,7 @@
 						<environment>Sandbox</environment>
 						<target>Cloudhub-US-East-2</target>
 						<replicas>1</replicas>
-						<vCores>1</vCores>
+						<vCores>0.2</vCores>
 						<properties>
 							<env>dev</env>
 							<http.port>8081</http.port>
