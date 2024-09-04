@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Exchange') {
             steps {
-                sh 'mvn clean deploy' 
+                bat 'mvn clean deploy' 
             }
         }
         stage('Runtime') {
             steps {
-                sh 'mvn clean deploy -DmuleDeploy' 
+                bat 'mvn clean deploy -DmuleDeploy' 
             }
         }
     }
