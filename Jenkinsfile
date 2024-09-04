@@ -6,17 +6,17 @@ pipeline {
     stages {
         stage('Clean') {
             steps {
-                bat 'mvn clean install' 
+                bat 'mvn clean install -X' 
             }
         }
         stage('Exchange') {
             steps {
-                bat 'mvn clean deploy' 
+                bat 'mvn clean deploy -X' 
             }
         }
         stage('Runtime') {
             steps {
-                bat 'mvn clean deploy -DmuleDeploy' 
+                bat 'mvn clean deploy -DmuleDeploy -X' 
             }
         }
     }
