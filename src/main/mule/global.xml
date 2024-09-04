@@ -14,8 +14,9 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
         <http:listener-connection host="0.0.0.0" port="8081" />
     </http:listener-config>
     <apikit:config name="uhub-sapi-config" api="uhub-sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="a99e8c78-22ca-4e49-b3b8-41790b36aa33" file="${env}.yaml" key="${enc.key}" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="a99e8c78-22ca-4e49-b3b8-41790b36aa33" file="dev.yaml" key="1234560123456789" />
 	<db:config name="Database_Config" doc:name="Database Config" doc:id="ab6eec87-0da1-40a9-9379-e59a0eb1db6c" >
 		<db:oracle-connection host="localhost" user="system" password="admin" instance="XE" />
 	</db:config>
+	<configuration-properties doc:name="Configuration properties" doc:id="06ea5c24-0768-4430-8607-abbf15d3f230" file="dev.yaml" />
 </mule>

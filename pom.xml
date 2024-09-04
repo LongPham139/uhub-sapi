@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>f8d0d1f8-770f-4eb9-bd38-bb62175774f5</groupId>
@@ -9,12 +11,12 @@
 
 	<name>uhub-sapi-project</name>
 
-	<description/>
+	<description />
 	<distributionManagement>
 		<repository>
-			<id>uhub-sapi-project</id>
-			<name>uhub-sapi-project</name>
-			<url>https://maven.anypoint.mulesoft.com/api/v3/organizations/f8d0d1f8-770f-4eb9-bd38-bb62175774f5/maven</url>
+			<id>anypoint-exchange-v3</id>
+			<name>Anypoint Exchange</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
 			<layout>default</layout>
 		</repository>
 	</distributionManagement>
@@ -24,39 +26,37 @@
 
 		<app.runtime>4.7.2</app.runtime>
 		<mule.maven.plugin.version>4.2.0</mule.maven.plugin.version>
-		<tags/>
+		<tags />
 		<categories>[]</categories>
 		<fields>[]</fields>
 	</properties>
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.mule.tools.maven</groupId>
 				<artifactId>mule-maven-plugin</artifactId>
-				<version>4.1.1</version>
+				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-					<classifier>mule-application</classifier>
+					<classifier>mule-application-example</classifier>
 					<cloudhub2Deployment>
-						<!-- <deploymentTimeout>100000000</deploymentTimeout> -->
-						<provider>MC</provider>
 						<uri>https://anypoint.mulesoft.com</uri>
-						<muleVersion>${app.runtime}</muleVersion>
-						<businessGroup>WFH</businessGroup>
-						<username>${username}</username>
-						<password>${password}</password>
-						<applicationName>uhub-sapi-project</applicationName>
+						<provider>MC</provider>
 						<environment>Sandbox</environment>
 						<target>Cloudhub-US-East-2</target>
+						<muleVersion>${app.runtime}</muleVersion>
+						<businessGroup>WFH</businessGroup>
+						<username>phamlong139</username>
+						<password>Ptl13092000</password>
+						<applicationName>uhub-sapi-project</applicationName>
 						<replicas>1</replicas>
 						<vCores>0.2</vCores>
 						<properties>
-							<env>${env}</env>
 							<http.port>8081</http.port>
-							<enc.key>${enc.key}</enc.key>
-							<platform.client_id>${platform.client_id}</platform.client_id>
-							<platform.client_secret>${platform.client_secret}</platform.client_secret>
+							<env>dev</env>
+							<enc.key>abcdef0123456789</enc.key>
+							<anypoint.platform.client_id>fde28733ec574dfcaee722202f8e8652</anypoint.platform.client_id>
+							<anypoint.platform.client_secret>F220D58f5B0A470990E4181D4A40FEe0</anypoint.platform.client_secret>
 						</properties>
 						<deploymentSettings>
 							<http>
@@ -67,7 +67,19 @@
 							</http>
 						</deploymentSettings>
 					</cloudhub2Deployment>
+					<sharedLibraries>
+						<sharedLibrary>
+							<groupId>com.oracle.database.jdbc</groupId>
+							<artifactId>ojdbc8</artifactId>
+						</sharedLibrary>
+					</sharedLibraries>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>exchange-mule-maven-plugin</artifactId>
+				<version>0.0.23</version>
+				<inherited>false</inherited>
 			</plugin>
 		</plugins>
 	</build>
