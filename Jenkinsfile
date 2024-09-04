@@ -1,4 +1,5 @@
 pipeline {
+    agent { label 'Idle'}
     stages {
         stage('Exchange') {
             steps {
