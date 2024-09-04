@@ -1,5 +1,4 @@
 pipeline {
-    agent { label 'LongPT37' }
     stages {
         stage('Exchange') {
             steps {
