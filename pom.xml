@@ -6,7 +6,7 @@
 
 	<groupId>f8d0d1f8-770f-4eb9-bd38-bb62175774f5</groupId>
 	<artifactId>uhub-sapi-project</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<packaging>mule-application</packaging>
 
 	<name>uhub-sapi-project</name>
